@@ -1,54 +1,257 @@
-# 📊 Meeting Insights
+# 📝 AI Meeting Minutes Generator & Analyzer
 
-Meeting Insights es una aplicación web interactiva construida con Streamlit que permite analizar actas de reuniones. La app detecta automáticamente tareas, decisiones clave y participación de los asistentes, generando reportes en Markdown, HTML y JSON.
+Genera y analiza actas de reuniones automáticamente utilizando Inteligencia Artificial y extracción de información basada en reglas.
 
-## 🔹 Funcionalidades principales
+Este proyecto combina:
 
-- Analiza textos de actas en español e inglés.
+* 🤖 Generación automática de actas mediante Mistral-7B-Instruct.
+* 🔍 Extracción de participantes, tareas, responsables, fechas y decisiones.
+* ⚡ Pipeline completo que transforma transcripciones en información accionable.
+* 💾 Exportación de resultados en Markdown y JSON.
 
-- Detecta tareas con responsables y fechas.
+Compatible con reuniones en español e inglés.
 
-- Identifica decisiones clave tomadas en la reunión.
+---
 
-- Cuenta las intervenciones por participante.
+## 🚀 Características
 
-- Exporta resultados en:
+### 🤖 Generación de actas con IA
 
-  - Markdown (.md)
-  
-  - HTML (.html)
-  
-  - JSON (.json)
+Convierte transcripciones o notas de reuniones en actas estructuradas en formato Markdown.
 
-## 💻 Cómo usar
+**Secciones generadas automáticamente:**
 
-Clona el repositorio:
+* Participantes
+* Temas tratados
+* Decisiones tomadas
+* Acciones y responsables
+* Próximos pasos
 
-git clone https://github.com/Kevin-2099/meeting-insights.git
+**Características:**
 
-cd meeting-insights
+* Detección automática de idioma.
+* Salidas estructuradas y consistentes.
+* Generación determinista.
+* No inventa información cuando no existe en el texto.
 
-Instala dependencias (recomendado usar un virtualenv):
+---
 
+### 🔍 Análisis automático de actas
+
+Analiza actas ya redactadas y extrae automáticamente:
+
+* 👥 Participantes
+* ✅ Tareas
+* 👤 Responsables
+* 📅 Fechas límite
+* 🔑 Decisiones
+
+Compatible con documentos en:
+
+* Español 🇪🇸
+* Inglés 🇬🇧
+
+---
+
+### ⚡ Pipeline Completo
+
+Permite ejecutar todo el flujo en un solo paso:
+
+```text
+Transcripción
+      ↓
+Generación con IA
+      ↓
+Acta estructurada
+      ↓
+Análisis automático
+      ↓
+Participantes + Tareas + Decisiones
+      ↓
+Exportación
+```
+
+---
+
+## 🏗️ Arquitectura
+
+```text
+                 ┌─────────────────┐
+                 │ Transcripción   │
+                 │ de reunión      │
+                 └────────┬────────┘
+                          │
+                          ▼
+                ┌──────────────────┐
+                │ Mistral-7B       │
+                │ Generador Acta   │
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Acta Markdown    │
+                └────────┬─────────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Analizador Regex │
+                └────────┬─────────┘
+                         │
+      ┌──────────────────┼──────────────────┐
+      ▼                  ▼                  ▼
+Participantes       Tareas            Decisiones
+```
+
+---
+
+## 🧠 Modelo utilizado
+
+**Modelo:**
+
+```text
+mistralai/Mistral-7B-Instruct-v0.2
+```
+
+**Inferencia mediante:**
+
+```python
+transformers.pipeline(
+    "text-generation",
+    model="mistralai/Mistral-7B-Instruct-v0.2"
+)
+```
+
+**Configuración:**
+
+```python
+temperature = 0
+do_sample = False
+```
+
+Esto permite obtener resultados consistentes y reproducibles.
+
+---
+
+## 💻 Instalación
+
+### 1️⃣ Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/ai-meeting-minutes.git
+cd ai-meeting-minutes
+```
+
+### 2️⃣ Crear entorno virtual
+
+#### Linux / macOS
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+#### Windows
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+### 3️⃣ Instalar dependencias
+
+```bash
 pip install -r requirements.txt
+```
 
-Ejecuta la aplicación:
+---
 
-streamlit run app.py
+## ▶️ Ejecución local
 
-Sube un archivo .txt o .md con el acta de la reunión, o pega el texto directamente en la aplicación.
+```bash
+python app.py
+```
 
-Explora los insights y descarga los reportes en el formato que necesites.
+La aplicación estará disponible en:
 
-## ⚙️ Requisitos
+```text
+http://localhost:7860
+```
 
-- Streamlit
+---
 
-- pandas
+## 📥 Entradas soportadas
 
-Instala dependencias con:
+### Generación
 
-pip install streamlit pandas
+* Transcripciones de reuniones
+* Notas de reuniones
+* Conversaciones informales
+
+### Análisis
+
+* Texto pegado manualmente
+* Archivos `.txt`
+* Archivos `.md`
+
+---
+
+## 📤 Exportación
+
+Los resultados pueden descargarse en:
+
+| Formato           | Descripción             |
+| ----------------- | ----------------------- |
+| 📄 Markdown (.md) | Informe legible         |
+| 📊 JSON (.json)   | Procesamiento posterior |
+
+---
+
+## 🌍 Idiomas soportados
+
+* Español 🇪🇸
+* Inglés 🇬🇧
+
+La detección de idioma se realiza automáticamente mediante:
+
+```text
+langdetect
+```
+
+---
+
+## 🧩 Casos de uso
+
+* 📈 Reuniones de trabajo
+* 📋 Gestión de proyectos
+* 🔄 Metodologías ágiles
+* 🏢 Comités
+* 🎓 Clases y reuniones académicas
+* 🎤 Entrevistas
+* 🧠 Workshops
+* 📚 Documentación interna
+
+---
+
+## ⚠️ Limitaciones
+
+* La calidad depende de la calidad de la transcripción.
+* Algunas expresiones muy informales pueden no ser detectadas por las reglas regex.
+* Reuniones extensas pueden requerir varios minutos de procesamiento.
+* El modelo requiere recursos suficientes para ejecutarse localmente.
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+* Python
+* Gradio
+* Transformers
+* Mistral-7B-Instruct
+* Pandas
+* LangDetect
+* Regex (Expresiones regulares)
+
+---
 
 ## 📄 Licencia
 Este proyecto se distribuye bajo una licencia propietaria con acceso al código (source-available).
@@ -62,6 +265,8 @@ El código fuente se pone a disposición únicamente para fines de visualizació
 📌 El texto legalmente vinculante de la licencia es la versión en inglés incluida en el archivo LICENSE.
 
 Se proporciona una traducción al español en LICENSE_ES.md únicamente con fines informativos. En caso de discrepancia, prevalece la versión en inglés.
+
+---
 
 ## Autor
 Kevin-2099
